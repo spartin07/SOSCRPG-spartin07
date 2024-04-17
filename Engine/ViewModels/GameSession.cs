@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Engine.Models;
+﻿using Engine.Models;
 using Engine.Factories;
 namespace Engine.ViewModels
 {
@@ -67,7 +61,7 @@ namespace Engine.ViewModels
                 Level = 1
             };
             CurrentWorld = WorldFactory.CreateWorld();
-            CurrentLocation = CurrentWorld.LocationAt(0, 0);
+            CurrentLocation = CurrentWorld.LocationAt(0, -1);
             CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
             CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1001));
             CurrentPlayer.Inventory.Add(ItemFactory.CreateGameItem(1002));
