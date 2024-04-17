@@ -40,6 +40,7 @@ namespace Engine.Factories
             newWorld.AddLocation(0, 2, "Herbalist's garden",
                 "There are many plants here, with snakes hiding behind them.",
                 "/Engine;component/Images/Locations/HerbalistsGarden.png");
+            newWorld.LocationAt(0, 2).AddMonster(1, 100);
             return newWorld;
         }
     }
