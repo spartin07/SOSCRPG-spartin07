@@ -41,47 +41,27 @@ namespace Engine.ViewModels
             }
         }
         public Weapon CurrentWeapon { get; set; }
-        public bool HasLocationToNorth
-        {
-            get
-            {
-                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1) != null;
-            }
-        }
-        public bool HasLocationToEast
-        {
-            get
-            {
-                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate) != null;
-            }
-        }
-        public bool HasLocationToSouth
-        {
-            get
-            {
-                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1) != null;
-            }
-        }
-        public bool HasLocationToWest
-        {
-            get
-            {
-                return CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate) != null;
-            }
-        }
+        public bool HasLocationToNorth => 
+            CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1) != null;
+        public bool HasLocationToEast => 
+            CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate) != null;
+        public bool HasLocationToSouth => 
+            CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1) != null;
+        public bool HasLocationToWest => 
+            CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate) != null;
         public bool HasMonster => CurrentMonster != null;
         #endregion
         public GameSession()
         {
             CurrentPlayer = new Player
-            {
-                Name = "Scott",
-                CharacterClass = "Fighter",
-                HitPoints = 10,
-                Gold = 1000000,
-                ExperiencePoints = 0,
-                Level = 1
-            };
+                            {
+                                Name = "Scott",
+                                CharacterClass = "Fighter",
+                                HitPoints = 10,
+                                Gold = 1000000,
+                                ExperiencePoints = 0,
+                                Level = 1
+                            };
             if (!CurrentPlayer.Weapons.Any())
             {
                 CurrentPlayer.AddItemToInventory(ItemFactory.CreateGameItem(1001));
@@ -91,37 +71,37 @@ namespace Engine.ViewModels
         }
         public void MoveNorth()
         {
-            if (HasLocationToNorth)
+            if(HasLocationToNorth)
             {
                 CurrentLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1);
             }
         }
         public void MoveEast()
         {
-            if (HasLocationToEast)
+            if(HasLocationToEast)
             {
                 CurrentLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate + 1, CurrentLocation.YCoordinate);
             }
         }
         public void MoveSouth()
         {
-            if (HasLocationToSouth)
+            if(HasLocationToSouth)
             {
                 CurrentLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate - 1);
             }
         }
         public void MoveWest()
         {
-            if (HasLocationToWest)
+            if(HasLocationToWest)
             {
                 CurrentLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate - 1, CurrentLocation.YCoordinate);
             }
         }
         private void GivePlayerQuestsAtLocation()
         {
-            foreach (Quest quest in CurrentLocation.QuestsAvailableHere)
+            foreach(Quest quest in CurrentLocation.QuestsAvailableHere)
             {
-                if (!CurrentPlayer.Quests.Any(q => q.PlayerQuest.ID == quest.ID))
+                if(!CurrentPlayer.Quests.Any(q => q.PlayerQuest.ID == quest.ID))
                 {
                     CurrentPlayer.Quests.Add(new QuestStatus(quest));
                 }
@@ -150,7 +130,7 @@ namespace Engine.ViewModels
                 RaiseMessage($"You hit the {CurrentMonster.Name} for {damageToMonster} points.");
             }
             // If monster if killed, collect rewards and loot
-            if (CurrentMonster.HitPoints <= 0)
+            if(CurrentMonster.HitPoints <= 0)
             {
                 RaiseMessage("");
                 RaiseMessage($"You defeated the {CurrentMonster.Name}!");
@@ -158,7 +138,7 @@ namespace Engine.ViewModels
                 RaiseMessage($"You receive {CurrentMonster.RewardExperiencePoints} experience points.");
                 CurrentPlayer.Gold += CurrentMonster.RewardGold;
                 RaiseMessage($"You receive {CurrentMonster.RewardGold} gold.");
-                foreach (ItemQuantity itemQuantity in CurrentMonster.Inventory)
+                foreach(ItemQuantity itemQuantity in CurrentMonster.Inventory)
                 {
                     GameItem item = ItemFactory.CreateGameItem(itemQuantity.ItemID);
                     CurrentPlayer.AddItemToInventory(item);
